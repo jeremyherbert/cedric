@@ -1,6 +1,6 @@
 # cedric, a testing tool
 
-The purpose of cedric is simple: it allows you to run multiple regex matches over a series of HTTP requested pages and lets you know if they fail. It does a few fancy things as well (cookie saving across tests, SSL support, and more!), but that's pretty much it. Let me be very clear: this is not meant to replace any unit testing framework. This is a tool for testing your applications as a whole, a little bit more peace of mind if you will. It hasn't been designed to be run after every save, rather you should run it just before you do a commit or a push.
+The purpose of cedric is simple: it allows you to run multiple regex matches over a series of HTTP requested pages and lets you know if they fail. It does a few fancy things as well (cookie saving across tests, SSL support, etc), but that's pretty much it. Let me be very clear: this is not meant to replace any unit testing framework. This is a tool for testing your applications as a whole, a little bit more peace of mind if you will. It hasn't been designed to be run after every save, rather you should run it just before you do a commit or a push.
 
 Also, this is no [selenium](http://seleniumhq.org/). There isn't and won't ever be anything involving a browser in this.
 
@@ -17,7 +17,7 @@ cd to your favourite folder.
 
 	$ git clone git@github.com:jeremyherbert/cedric.git
 
-Now in that folder, edit the example yaml file. You can always write your own too, it's all explained in the file!
+Now in that folder, edit the example yaml file. You can always write your own too, it's all explained in the file.
 
 	$ python run_cedric.py example.yml
 
