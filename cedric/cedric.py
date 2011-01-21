@@ -19,7 +19,6 @@ options:
     -v, --verbose                           Print all debug messages
     -d [folder], --dump [folder]            If a test fails occurs, dump the
                                             HTTP data to a file in the folder
-    -s, --stop                              Stop at the first test failure
     -p, --pdb                               Drop to pdb on test failure or exception
 """
 
@@ -159,8 +158,6 @@ class Tester(object):
             elif type(all_test.get('patterns')) == dict:
                 patterns = all_test['patterns']
             
-            
-            
             url = self.base_url + test_data['url']
             
             # encode post data
@@ -185,7 +182,7 @@ class Tester(object):
             self.tests.append(test)
         
         print "\n\nTest report for %s:" % self.test_file
-        print "%i tests with %i regexes run; %i passed, %i warnings, %i failed" % (len(self.tests), regex_count, count['P'], count['W'], count['F'])
+        print "%i tests (with %i regexes) run; %i tests passed, %i warnings, %i failed" % (len(self.tests), regex_count, count['P'], count['W'], count['F'])
         
         if count['W']:
             print "(note: some tests ended with warnings; the results for these tests may be invalid)"
@@ -261,7 +258,7 @@ class Test(object):
         
         Gets a single character status code, useful in showing the overall test results
         """
-        return {TestStatus.OK: '.', TestStatus.WARN: 'W', TestStatus.FAILURE: 'E'}[self.status]
+        return {TestStatus.OK: '.', TestStatus.WARN: 'W', TestStatus.FAILURE: 'F'}[self.status]
 
     def run(self):
         """
@@ -273,7 +270,10 @@ class Test(object):
         
         try:
             print_v("Getting %s (POST data: \"%s\")" % (self.url, self.post_data))
-            self.page = self.opener.open(self.url, self.post_data).read()
+            if self.post_data:
+                self.page = self.opener.open(self.url, self.post_data).read()
+            else:
+                self.page = self.opener.open(self.url).read()
         except urllib2.HTTPError, e: # we want to catch any status errors so we can still test
             self.setStatus(TestStatus.WARN, "HTTPError encountered with code %s" % e.code)
             return

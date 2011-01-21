@@ -1,0 +1,49 @@
+# cedric example test file
+# this is all just standard yaml with one exception: the order of the tests matter
+# also please remember that this is all case-sensitive. Case matters!
+
+# I don't guarantee this file will work with jeremyherbert.net as the url. things change!
+
+# we have two top level keys, meta and tests
+meta:                                   # required
+    name: cedric example file           # the name of our test, required
+    base_url: jeremyherbert.net         # the base url we will be testing, required
+    
+tests:
+    all:                                # all is a special test case, the patterns are run *every* test case
+        patterns:
+            # first, we will write a positive match pattern (see the plus at the end?). This pattern will succeed
+            # only if the regex is matched once or more times.
+            IsValidHTML+: <!DOCTYPE.*>.*<html>.*<head>.*</head>.*<body>.*</body>.*</html>
+            
+            # this is a negative match pattern. It should never match!
+            NotHacked-: You.ve been hacked! also this website is (silly|dumb)
+    
+    # now we do a real test
+    testIndex:                          # give the test a name!
+        url: /                          # this is the page we want to pull
+        patterns:
+            # you can test for whatever you want, why not some css or javascript?
+            SyntaxHighlighterWillRun+: window\.onload.*SyntaxHighlighter\.all\(\);.*</script>
+            BodyHas20pxPadding+: body\s*\{[^\}]*padding.\s*20px[^\}]*\}
+            
+            DeveloperIsNotATool-: <marquee>
+            DeveloperIsAwesome-: <blink>
+            NobodyUsesTablesAnymore-: <table[^>]*>
+            
+#    testAnotherPageWithSSL*:            # if the test ends in a *, cedric will connect via SSL
+                                        # unfortunately, my personal website doesn't use SSL so this will fail
+                                        # you are most welcome to use it though!
+                                        
+    testSomeMore:
+        url: /get/cnc
+        
+        # if we wanted to post some data, you just throw it in the "post" key. For example:
+#        post:                           # this is where we put in our POST key/vals
+#            user: example
+#            pass: example
+#            orange: 1
+        
+        patterns:
+            isInProgress+: \{in progress\}
+            hasAYoutubeVideo+: <embed.*youtube\.com/v/.*[^"]"[^>]*>[^<]*</embed>
