@@ -196,7 +196,7 @@ class Tester(object):
             print "\nFailed tests:"
             for test in self.tests:
                 if test.status == TestStatus.FAILURE:
-                    print "    %s:" % test.name
+                    print "    %s: (%s)" % (test.name, test.url)
                     for f in test.failures:
                         print "        %s" % f
                     print "\n"
